@@ -20,7 +20,10 @@ tabla='stg_Combustibles'
 
 
 conn_pg = psycopg2.connect("host='{}' port={} dbname='{}' user={} password={}".format(host_pg, port_pg, bd_postgre, user_pg, password_pg))
-sql = 'SELECT * FROM public."stg_Combustibles"'
+#sql = 'SELECT * FROM public."stg_Combustibles"'
+#df = sqlio.read_sql_query(sql, conn_pg)
+
+sql = 'SELECT public.Provincia,public.Municipio,public.Localidad FROM public."stg_Combustibles"'
 df = sqlio.read_sql_query(sql, conn_pg)
 
 print(df.head())

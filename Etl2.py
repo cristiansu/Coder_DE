@@ -15,7 +15,8 @@ password_pg='Wallace709***'
 host_pg='127.0.0.1'
 port_pg=5432
 #con_string=f'postgresql://{user}:{password}@{host}:5432/{bd_postgre}'
-tabla='stg_Combustibles'
+#tabla='stg_Combustibles' es la tabla original, la primera cargada
+tabla='stg_Combustibles_gby_localidad'
 
 def extraer_desde_postgres():
     try:
@@ -25,8 +26,11 @@ def extraer_desde_postgres():
         # df=pd.read_sql("SELECT * FROM \"stg_Combustibles\"",conex)
 
         conn_pg = psycopg2.connect("host='{}' port={} dbname='{}' user={} password={}".format(host_pg, port_pg, bd_postgre, user_pg, password_pg))
-        sql = 'SELECT * FROM public."stg_Combustibles"'
-        df = sqlio.read_sql_query(sql, conn_pg)
+        #sql = 'SELECT "Provincia","Localidad","Longitud","Latitud","Precio gasolina 98 E5" as Bencina98,"Precio gasóleo A" as Diesel,"Rótulo" as Concesionario  FROM public."stg_Combustibles"'
+        sql2= '''SELECT t."Provincia",AVG(t.Bencina98) as "PromBencina98",AVG(t.Diesel) as "PromDiesel" 
+        from (SELECT "Provincia","Localidad","Longitud","Latitud",CAST(REPLACE("Precio gasolina 98 E5",',','.') AS float) as Bencina98, CAST(REPLACE("Precio gasóleo A",',','.') AS float) as Diesel,"Rótulo" as Concesionario from public."stg_Combustibles" where "Precio gasolina 98 E5" is not null and "Precio gasóleo A" is not null) as t 
+        group by t."Provincia"'''
+        df = sqlio.read_sql_query(sql2, conn_pg)
         
 
         connx=conexion_rf()
@@ -65,7 +69,8 @@ def cargar_en_redshift(conn, table_name, dataframe):
         dtypes= dataframe.dtypes
         cols= list(dtypes.index )
         tipos= list(dtypes.values)
-        type_map = {'integer':'INT','int64': 'INT','int32': 'INT','float64': 'FLOAT','object': 'VARCHAR(300)','bool':'BOOLEAN'}
+        #type_map = {'integer':'INT','int64': 'INT','int32': 'INT','float64': 'FLOAT','object': 'VARCHAR(300)','bool':'BOOLEAN'}
+        type_map = {'object': 'VARCHAR(300)','int64':'INT','integer':'INT','float64': 'FLOAT'}
         sql_dtypes = [type_map[str(dtype)] for dtype in tipos]
         # Definir formato SQL VARIABLE TIPO_DATO
         column_defs = [f"{name} {data_type}" for name, data_type in zip(cols, sql_dtypes)]
@@ -86,7 +91,7 @@ def cargar_en_redshift(conn, table_name, dataframe):
         cur.execute("BEGIN")
         execute_values(cur, insert_sql, values)
         cur.execute("COMMIT")
-        print('Proceso terminado')
+        print('Proceso terminado, carga redshift ok')
     except Exception as e:
         print(f'Error dato, tipo: {str(e)}')
 
