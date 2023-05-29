@@ -12,7 +12,7 @@ ETL que extrae datos desde API pública en la web, luego los carga, primero en u
 ### Segunda Parte
 
 * Transformación tabla, selección de columnas. Luego carga de la tabla transformada en redshift
-* Transformación tabla, reemplazo de comas por puntos en columnas de precios, uso de CAST para convertir object a float, agregación COUNT y Average, agrupación group by. Carga de tabla transformada en redshift.
+* Transformación tabla para generar una segunda tabla, reemplazo de comas por puntos en columnas de precios, uso de CAST para convertir object a float, agregación COUNT y Average, agrupación group by. Carga de esta segunda tabla transformada en redshift.
 
 ## Etapas e imágenes
 
