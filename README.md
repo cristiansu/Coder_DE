@@ -44,3 +44,11 @@ Primer intento (arrojó el error el primer intento ---- debo corregir )
 
 Segundo intento corrección del fail
 ![My Image](img_22jun/AirflowDags.png)
+
+Imagenes tareas y log de Airflow
+
+![My Image](img_22jun/af_dag1.png)
+![My Image](img_22jun/af_dag1_log.png)
+![My Image](img_22jun/af_dag2.png)
+![My Image](img_22jun/af_dag2_log.png)
+
