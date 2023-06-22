@@ -14,6 +14,10 @@ ETL que extrae datos desde API pública en la web, luego los carga, primero en u
 * Transformación tabla, selección de columnas. Luego carga de la tabla transformada en redshift
 * Transformación tabla para generar una segunda tabla, reemplazo de comas por puntos en columnas de precios, uso de CAST para convertir object a float, agregación COUNT y Average, agrupación group by. Carga de esta segunda tabla transformada en redshift.
 
+### Tercera Parte
+
+* Uso de Docker y Airflow
+
 ## Etapas e imágenes
 
 * Extracción data desde API web. Se convierte data a dataframe con pandas y luego se pasa a SQL postres local. El código está en archivo Etl1.py
@@ -32,3 +36,6 @@ ETL que extrae datos desde API pública en la web, luego los carga, primero en u
 ![My Image](tabla_transform_redshift.png)
 
 ![My Image](tabla_transform_postgre.png)
+
+* Uso de Docker y Airflow (arrojó el error el primer intento ---- debo corregir )
+![My Image](DCompose_fail.png)
