@@ -58,7 +58,7 @@ Imagenes tareas y log de Airflow
 
 * Envio Notificación Email
 
-![My Image](fotos_proy/airflow-menu.png)
+![My Image](fotos_proy/airlflow-menu.png)
 
 ![My Image](fotos_proy/envio_mail_flujo.png)
 
