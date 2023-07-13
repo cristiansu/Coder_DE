@@ -37,5 +37,18 @@ ETL que extrae datos desde API pública en la web, luego los carga, primero en u
 
 ![My Image](tabla_transform_postgre.png)
 
-* Uso de Docker y Airflow (arrojó el error el primer intento ---- debo corregir )
+* Uso de Docker y Airflow
+
+Primer intento (arrojó el error el primer intento ---- debo corregir )
 ![My Image](DCompose_fail.png)
+
+Segundo intento corrección del fail
+![My Image](img_22jun/AirflowDags.png)
+
+Imagenes tareas y log de Airflow
+
+![My Image](img_22jun/af_dag1.png)
+![My Image](img_22jun/af_dag1_log.png)
+![My Image](img_22jun/af_dag2.png)
+![My Image](img_22jun/af_dag2_log.png)
+
