@@ -18,6 +18,10 @@ ETL que extrae datos desde API pública en la web, luego los carga, primero en u
 
 * Uso de Docker y Airflow
 
+#### Cuarta Parte
+
+* Envío aviso notificación por email proceso ETL ok
+
 ## Etapas e imágenes
 
 * Extracción data desde API web. Se convierte data a dataframe con pandas y luego se pasa a SQL postres local. El código está en archivo Etl1.py
@@ -52,3 +56,15 @@ Imagenes tareas y log de Airflow
 ![My Image](img_22jun/af_dag2.png)
 ![My Image](img_22jun/af_dag2_log.png)
 
+* Envio Notificación Email
+
+![My Image](fotos_proy/airflow-menu.png)
+
+![My Image](fotos_proy/envio_mail_flujo.png)
+
+![My Image](fotos_proy/log_envio_mail_ok.png)
+
+![My Image](fotos_proy/img_correo_recibido.png)
+
+![My Image](fotos_proy/log_etl_2.png)
+  
