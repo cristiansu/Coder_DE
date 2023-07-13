@@ -10,13 +10,21 @@ from datetime import timedelta,datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
+#para email
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.encoders import encode_base64
+from email.mime.text import MIMEText
+import smtplib
+from datetime import date
+
 
 
 
 # argumentos por defecto para el DAG
 default_args = {
     'owner': 'CristianSU',
-    'start_date': datetime(2023,6,20),
+    'start_date': datetime(2023,7,13),
     'retries':5,
     'retry_delay': timedelta(minutes=5)
 }
@@ -122,6 +130,27 @@ def cargar_en_redshift(conn, table_name, dataframe):
         print(f'Error dato, tipo: {str(e)}')
 
 
+def envia_mail():
+	hoy = date.today()
+	remitente='testingcgc@gmail.com'
+	asunto='Aviso Proceso ETL'+'  '+str(hoy)
+	texto_correo='''Aviso Proceso ETL Ok!'''
+	
+	mensaje=MIMEMultipart()
+	mensaje['From']=remitente
+	mensaje['Subject']=asunto
+	mensaje.attach(MIMEText(texto_correo, 'plain'))
+	
+	destinatario=['casu709@gmail.com']
+	mensaje['To']=', '.join(destinatario)
+		
+	server = smtplib.SMTP('smtp.gmail.com', 587)
+	server.starttls()
+	server.login('testingcgc@gmail.com', 'cwiekjerevntmgef')
+	texto=mensaje.as_string()
+	server.sendmail('testingcgc@gmail.com', destinatario, texto)
+	server.quit()
+
 # try:
 #     #llamar función extraer desde postgres que luego activará la carga en redshift
 #     #conexion_rf()
@@ -140,3 +169,13 @@ task_1 = PythonOperator(
     #op_args=["{{ ds }} {{ execution_date.hour }}"],
     dag=BC_dag,
 )
+
+##2. Enviar mail
+task_2 = PythonOperator(
+    task_id='enviar_mail',
+    python_callable=envia_mail,
+    #op_args=["{{ ds }} {{ execution_date.hour }}"],
+    dag=BC_dag,
+)
+
+task_1 >> task_2

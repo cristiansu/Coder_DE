@@ -57,6 +57,7 @@ def cargar_postgres(df):
     except Exception as e:
         print("Error en carga de datos: " + str(e))
 
+
 # try:
 #     #llamar función extraer desde api
 #     extraer_api()
